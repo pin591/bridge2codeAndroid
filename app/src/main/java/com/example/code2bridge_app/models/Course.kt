@@ -1,6 +1,6 @@
 package com.example.code2bridge_app.models
 
-import com.example.code2bridge_app.R
+import com.example.code2bridge.R
 
 public class Course (val imageRes: Int,
               val sesiones: Int,

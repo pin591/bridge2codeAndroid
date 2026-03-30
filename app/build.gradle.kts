@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.code2bridge_app"
+    namespace = "com.example.code2bridge"
     compileSdk = 36
 
     defaultConfig {
@@ -66,4 +66,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 }

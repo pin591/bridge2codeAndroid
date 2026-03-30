@@ -1,4 +1,4 @@
-package com.example.code2bridge_app
+package com.example.code2bridge
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

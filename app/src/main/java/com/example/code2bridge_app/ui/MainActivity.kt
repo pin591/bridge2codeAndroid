@@ -1,9 +1,13 @@
 package com.example.code2bridge_app.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import com.example.code2bridge_app.ui.components.AppNavigation
 import com.example.code2bridge_app.ui.screens.UserScreen
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +15,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            UserScreen()
+            MaterialTheme{
+                Surface (
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    AppNavigation()
+                }
+                /*Surface (
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    UserScreen()
+                }*/
+            }
         }
     }
 }

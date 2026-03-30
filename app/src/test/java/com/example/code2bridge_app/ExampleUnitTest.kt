@@ -1,4 +1,4 @@
-package com.example.code2bridge_app
+package com.example.code2bridge
 
 import org.junit.Test
 

@@ -43,6 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.code2bridge.R
 import com.example.code2bridge_app.ui.theme.Code2bridgeappTheme
 import com.example.code2bridge_app.models.Course
 
