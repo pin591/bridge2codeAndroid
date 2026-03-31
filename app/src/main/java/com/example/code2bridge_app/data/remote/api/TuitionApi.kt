@@ -17,7 +17,7 @@ interface TuitionApi {
     suspend fun getAllTuitions(): List<TuitionDto>
 
     @POST("tuitions")
-    suspend fun createTuition(@Body student: TuitionCreateDto): TuitionDto
+    suspend fun createTuition(@Body student: TuitionCreateDto): Response<TuitionDto>
 
     @PUT("tuitions/{id}")
     suspend fun updateTuition(@Path("id") id: Long, @Body student: TuitionUpdateDto): TuitionDto

@@ -23,3 +23,9 @@ data class CourseUpdateDto (
     val lookupTitle: LookupLine,
     val description: String
 )
+
+data class CourseResponse (
+    val success: Boolean,
+    val message: String,
+    val idCourse: Int
+)

@@ -21,3 +21,9 @@ data class TuitionUpdateDto (
     val student: Student,
     val course: Course
 )
+
+data class TuitionResponse (
+    val success: Boolean,
+    val message: String,
+    val idTuition: Int
+)

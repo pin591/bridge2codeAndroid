@@ -2,7 +2,8 @@ package com.example.code2bridge_app.data.remote.api
 
 import com.example.code2bridge_app.data.remote.dto.StudentCreateDto
 import com.example.code2bridge_app.data.remote.dto.StudentDto
-import com.example.code2bridge_app.data.remote.dto.StudentUpdateDto
+import com.example.code2bridge_app.data.remote.dto.StudentResponse
+import com.example.code2bridge_app.data.remote.dto.StudentUpdateRequestDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -17,12 +18,11 @@ interface StudentApi {
     suspend fun getAllStudents(): List<StudentDto>
 
     @POST("students")
-    suspend fun createStudent(@Body student: StudentCreateDto): StudentDto
+    suspend fun createStudent(@Body student: StudentCreateDto): Response<StudentDto>
 
     @PUT("students/{id}")
-    suspend fun updateStudent(@Path("id") id: Long, @Body student: StudentUpdateDto): StudentDto
+    suspend fun updateStudent(@Path("id") id: Int, @Body student: StudentUpdateRequestDto): Response<StudentResponse>
 
-    @DELETE("students/{id}")
-    suspend fun softDeleteStudent(@Path("id") id: Long): Response<Unit>
-
+    @DELETE("students/{id}/delete")
+    suspend fun softDeleteStudent(@Path("id") id: Int): Response<Unit>
 }

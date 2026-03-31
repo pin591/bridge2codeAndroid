@@ -107,5 +107,15 @@ fun LoginScreen(navController: NavController) {
                 Text("Iniciar sesión")
             }
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = { navController.navigate("register") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Registrarse")
+        }
+
     }
 }

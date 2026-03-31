@@ -3,6 +3,7 @@ package com.example.code2bridge_app.ui.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
@@ -29,14 +30,15 @@ sealed class BottomNavItem(
     object Students : BottomNavItem("students", "Estudiantes", Icons.Default.Person)
     object Courses : BottomNavItem("courses", "Cursos", Icons.Default.Star)
     object Tuitions : BottomNavItem("tuitions", "Matrículas", Icons.Default.CheckCircle)
+    object LogOut : BottomNavItem("logout", "Cerrar Sesión", Icons.Default.Close)
 }
 
 @Composable
-fun HomeScreen(navController: NavController? = null) {
-    val navController = rememberNavController()
-    val items = listOf(BottomNavItem.Students, BottomNavItem.Courses, BottomNavItem.Tuitions)
+fun HomeScreen(mainNavController: NavController? = null) {
+    val internalNavController = rememberNavController()
+    val items = listOf(BottomNavItem.Students, BottomNavItem.Courses, BottomNavItem.Tuitions, BottomNavItem.LogOut)
 
-    val navBavkStackEntry by navController.currentBackStackEntryAsState()
+    val navBavkStackEntry by internalNavController.currentBackStackEntryAsState()
     val currentDestination = navBavkStackEntry?.destination
 
     Scaffold(
@@ -48,12 +50,22 @@ fun HomeScreen(navController: NavController? = null) {
                         label = { Text(item.title) },
                         selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                         onClick = {
-                            navController?.navigate(item.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                            if (item.route == "logout") {
+                                if (mainNavController != null) {
+                                    mainNavController.navigate("login") {
+                                        popUpTo(0) { inclusive = true }
+                                    }
+                                } else {
+                                    internalNavController.navigate("logout")
                                 }
-                                launchSingleTop = true
-                                restoreState = true
+                            } else {
+                                internalNavController.navigate(item.route) {
+                                    popUpTo(internalNavController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             }
                         }
                     )
@@ -62,11 +74,14 @@ fun HomeScreen(navController: NavController? = null) {
         }
     ) { innerPadding ->
         NavHost (
-            navController = navController,
+            navController = internalNavController,
             startDestination = "students",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("students") { StudentScreen() }
+            composable("students") { StudentScreen(
+                internalNavController = internalNavController,
+                mainNavController = mainNavController
+            ) }
             composable("courses") { CourseScreen() }
             composable("tuitions") { TuitionScreen() }
         }

@@ -21,12 +21,6 @@ class MainActivity : ComponentActivity() {
                 ) {
                     AppNavigation()
                 }
-                /*Surface (
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    UserScreen()
-                }*/
             }
         }
     }

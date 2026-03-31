@@ -8,7 +8,7 @@ data class LoginRequestDto(
 data class LoginResponseDto(
     val success: Boolean,
     val message: String,
-    val userId: Long?,
+    val idUser: Int?,
     val username: String?,
     val isAdmin: Boolean
 )

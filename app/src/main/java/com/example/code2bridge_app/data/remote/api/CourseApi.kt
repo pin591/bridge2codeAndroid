@@ -17,7 +17,7 @@ interface CourseApi {
     suspend fun getAllCourses(): List<CourseDto>
 
     @POST("courses")
-    suspend fun createCourse(@Body student: CourseCreateDto): CourseDto
+    suspend fun createCourse(@Body student: CourseCreateDto): Response<CourseDto>
 
     @PUT("courses/{id}")
     suspend fun updateCourse(@Path("id") id: Long, @Body student: CourseUpdateDto): CourseDto
