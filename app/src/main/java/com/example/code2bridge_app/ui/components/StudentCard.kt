@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,10 +54,16 @@ fun StudentCard(student: Student, onClick: () -> Unit) {
                 StatusBadge(enabled = student.enableFlag == "Y")
             }
 
-            Divider(modifier = Modifier.padding(vertical = 12.dp), color = Color.LightGray.copy(alpha = 0.5f))
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 12.dp),
+                thickness = DividerDefaults.Thickness,
+                color = Color.LightGray.copy(alpha = 0.5f)
+            )
 
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                UserInfoRow(icon = Icons.Default.Info, text = "Usuario: ${student.user.username}")
+                val usernameText = student.user.username?.let { "Usuario: $it" } ?: "Usuario: (sin asignar)"
+                UserInfoRow(icon = Icons.Default.Info, text = usernameText)
+
                 student.startDate?.let {
                     UserInfoRow(icon = Icons.Default.DateRange, text = it)
                 }

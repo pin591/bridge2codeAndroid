@@ -17,6 +17,7 @@ import com.example.code2bridge_app.data.remote.RetrofitClient
 import com.example.code2bridge_app.data.remote.api.StudentApi
 import com.example.code2bridge_app.data.remote.dto.StudentUpdateRequestDto
 import com.example.code2bridge_app.viewmodel.StudentViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,6 +28,7 @@ fun StudentDetailScreen(studentId: Int, navController: NavController, viewModel:
     var age by remember { mutableStateOf("") }
     var errorMessage : String? by remember { mutableStateOf(null) }
     var successMessage : String? by remember { mutableStateOf(null) }
+    var isLoading by remember { mutableStateOf(false) }
 
     val studentApi = RetrofitClient.instance.create(StudentApi::class.java)
     val scope = rememberCoroutineScope()
@@ -63,24 +65,22 @@ fun StudentDetailScreen(studentId: Int, navController: NavController, viewModel:
                     IconButton(onClick = {
                         /* Logica para eliminar de forma Soft el registro */
                         scope.launch {
+                            isLoading = true
                             try {
                                 var response = studentApi.softDeleteStudent(studentId)
 
                                 if (response.isSuccessful) {
-                                    viewModel.loadStudents()
-
-                                    navController.popBackStack()
                                     successMessage = "¡Estudiante eliminado con éxito!"
-
-                                    kotlinx.coroutines.delay(1500)
-                                    navController.navigate("home") {
-                                        popUpTo("studentDetail/$studentId") { inclusive = true }
-                                    }
+                                    viewModel.loadStudents()
+                                    delay(800)
+                                    navController.popBackStack()
                                 } else {
-                                    errorMessage = "Error al eliminar estudiante"
+                                    errorMessage = "Error al eliminar estudiante (código: ${response.code()})"
                                 }
                             } catch (e: Exception) {
                                 errorMessage = "Error de conexión: ${e.message}"
+                            } finally {
+                                isLoading = false
                             }
                         }
                     }) {
@@ -126,35 +126,37 @@ fun StudentDetailScreen(studentId: Int, navController: NavController, viewModel:
 
             Button(
                 onClick = {
+                    isLoading = true
                     /* Logica de guardar el registro de estudiante */
                     scope.launch {
                         try {
                             var studentDto = StudentUpdateRequestDto(name, surname, age.toInt())
-
                             var response = studentApi.updateStudent(studentId, studentDto)
 
                             if (response.isSuccessful && response.body()?.success == true) {
-                                viewModel.loadStudents()
-                                navController.popBackStack()
-                                val studentId = response.body()?.idStudent
                                 successMessage = "¡Actualización completada con éxito!"
-
-                                kotlinx.coroutines.delay(3000)
-                                navController.navigate("home") {
-                                    popUpTo("studentDetail/$studentId") { inclusive = true }
-                                }
+                                viewModel.loadStudents()
+                                delay(800)
+                                navController.popBackStack()
                             } else {
-                                errorMessage = response.body()?.message ?: "Error al actualizar estudiante"
+                                errorMessage = response.body()?.message ?: "Error al actualizar estudiante (código: ${response.code()})"
                             }
                         } catch (e: Exception) {
                             errorMessage = "Error de conexión: ${e.message}"
+                        } finally {
+                            isLoading = false
                         }
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
+                enabled = !isLoading,
                 shape = MaterialTheme.shapes.medium
             ) {
-                Text("Guardar Cambios")
+                if (isLoading) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
+                } else {
+                    Text("Guardar Cambios")
+                }
             }
         }
     }

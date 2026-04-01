@@ -5,8 +5,8 @@ import com.example.code2bridge_app.data.model.Student
 
 data class TuitionDto (
     val idTuition: Int,
-    val student: Student,
-    val course: Course,
+    val student: StudentDto,
+    val course: CourseDto,
     val enableFlag: String,
     val startDate: String?,
     val endDate: String?

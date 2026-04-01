@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,12 +43,14 @@ fun UserCard(user: User) {
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = user.username,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    user.username?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
 
                 if (user.isAdmin) {
@@ -55,13 +58,13 @@ fun UserCard(user: User) {
                 }
             }
 
-            Divider(modifier = Modifier.padding(vertical = 12.dp), color = Color.LightGray)
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 12.dp),
+                thickness = DividerDefaults.Thickness,
+                color = Color.LightGray
+            )
 
-            // Info secundaria: Email
             UserInfoRow(icon = Icons.Default.Email, text = user.email)
-
-            // Podrías añadir la fecha aquí si quieres
-            // user.startDate?.let { UserInfoRow(icon = Icons.Default.DateRange, text = "Desde: $it") }
         }
     }
 }
@@ -112,17 +115,4 @@ fun UserInfoRow(icon: ImageVector, text: String) {
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
-}
-
-// Preview solo de la tarjeta
-@Preview(showBackground = true)
-@Composable
-fun UserCardPreview() {
-    UserCard(
-        user = User(
-            username = "Carlos Gómez",
-            email = "carlos@mail.com",
-            isAdmin = true
-        )
-    )
 }

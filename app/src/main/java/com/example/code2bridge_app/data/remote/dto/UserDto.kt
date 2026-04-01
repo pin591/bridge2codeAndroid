@@ -1,7 +1,7 @@
 package com.example.code2bridge_app.data.remote.dto
 
 data class UserDto (
-    val idUser: Long,
+    val idUser: Int,
     val username: String,
     val password: String,
     val email: String,

@@ -2,6 +2,7 @@ package com.example.code2bridge_app.ui.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Person
@@ -20,6 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.code2bridge_app.ui.screens.student.StudentScreen
 import com.example.code2bridge_app.ui.screens.course.CourseScreen
+import com.example.code2bridge_app.ui.screens.lookup.LookupScreen
 import com.example.code2bridge_app.ui.screens.tuition.TuitionScreen
 
 sealed class BottomNavItem(
@@ -30,13 +32,14 @@ sealed class BottomNavItem(
     object Students : BottomNavItem("students", "Estudiantes", Icons.Default.Person)
     object Courses : BottomNavItem("courses", "Cursos", Icons.Default.Star)
     object Tuitions : BottomNavItem("tuitions", "Matrículas", Icons.Default.CheckCircle)
-    object LogOut : BottomNavItem("logout", "Cerrar Sesión", Icons.Default.Close)
+    object Lookups : BottomNavItem("lookups", "Lookups", Icons.Default.Build)
+    object LogOut : BottomNavItem("logout", "Logout", Icons.Default.Close)
 }
 
 @Composable
 fun HomeScreen(mainNavController: NavController? = null) {
     val internalNavController = rememberNavController()
-    val items = listOf(BottomNavItem.Students, BottomNavItem.Courses, BottomNavItem.Tuitions, BottomNavItem.LogOut)
+    val items = listOf(BottomNavItem.Students, BottomNavItem.Courses, BottomNavItem.Tuitions, BottomNavItem.Lookups, BottomNavItem.LogOut)
 
     val navBavkStackEntry by internalNavController.currentBackStackEntryAsState()
     val currentDestination = navBavkStackEntry?.destination
@@ -79,11 +82,11 @@ fun HomeScreen(mainNavController: NavController? = null) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable("students") { StudentScreen(
-                internalNavController = internalNavController,
                 mainNavController = mainNavController
             ) }
             composable("courses") { CourseScreen() }
             composable("tuitions") { TuitionScreen() }
+            composable("lookups") { LookupScreen() }
         }
     }
 }

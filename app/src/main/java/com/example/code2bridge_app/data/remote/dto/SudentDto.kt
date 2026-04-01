@@ -2,6 +2,7 @@ package com.example.code2bridge_app.data.remote.dto
 
 data class StudentDto (
     val idStudent: Int,
+    val username: String,
     val name: String,
     val surname: String,
     val age: Int,
@@ -24,8 +25,9 @@ data class StudentUpdateRequestDto(
     val age: Int
 )
 
-data class StudentResponse(
+data class StudentResponseDto(
     val success: Boolean,
     val message: String,
-    val idStudent: Int
+    val idStudent: Int,
+    val username: String
 )

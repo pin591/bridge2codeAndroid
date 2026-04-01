@@ -22,15 +22,18 @@ class StudentRepository {
             name = this.name,
             surname = this.surname,
             age = this.age,
-            enableFlag = this.enableFlag.toString(), // Manejo de nulos
+            enableFlag = this.enableFlag.toString(),
             startDate = this.startDate,
             endDate = this.endDate,
-            // Mapeo manual del usuario si no tienes toModel() en UserDto
-            user = User(
-            username = this.user?.username ?: "",
-            email = this.user?.email ?: "",
-            isAdmin = this.user?.isAdmin ?: false
-            )
+            user = this.user?.let { userDto ->
+                User(
+                    idUser = userDto.idUser ?: 0,
+                    username = userDto.username,
+                    email = userDto.email,
+                    isAdmin = userDto.isAdmin ?: false,
+                    enableFlag = userDto.enableFlag ?: "Y"
+                )
+            } ?: User()
         )
     }
 }

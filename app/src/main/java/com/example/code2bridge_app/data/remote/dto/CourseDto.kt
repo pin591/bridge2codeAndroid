@@ -24,7 +24,7 @@ data class CourseUpdateDto (
     val description: String
 )
 
-data class CourseResponse (
+data class CourseResponseDto (
     val success: Boolean,
     val message: String,
     val idCourse: Int

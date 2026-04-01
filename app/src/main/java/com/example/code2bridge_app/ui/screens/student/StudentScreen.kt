@@ -26,13 +26,16 @@ import com.example.code2bridge_app.viewmodel.StudentViewModel
 
 @Composable
 fun StudentScreen(
-    internalNavController: NavController,
     mainNavController: NavController?,
     viewModel: StudentViewModel = viewModel()
 ) {
     val students by viewModel.students.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadStudents()
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         when {
