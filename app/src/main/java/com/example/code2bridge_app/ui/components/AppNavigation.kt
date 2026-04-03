@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.code2bridge.ui.screens.auth.RegisterScreen
 import com.example.code2bridge_app.ui.screens.auth.LoginScreen
 import com.example.code2bridge_app.ui.screens.HomeScreen
+import com.example.code2bridge_app.ui.screens.course.CourseDetailScreen
 import com.example.code2bridge_app.ui.screens.student.StudentDetailScreen
 
 @Composable
@@ -34,6 +35,13 @@ fun AppNavigation() {
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("studentId") ?: 0
             StudentDetailScreen(studentId = id, navController = navController)
+        }
+        composable(
+            route = "courseDetail/{courseId}",
+            arguments = listOf(navArgument("courseId") { type = NavType.IntType }) // ESTA LINEA FALTA
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("courseId") ?: 0
+            CourseDetailScreen(courseId = id, navController = navController)
         }
     }
 }

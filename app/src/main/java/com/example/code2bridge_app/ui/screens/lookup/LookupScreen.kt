@@ -78,7 +78,7 @@ fun LookupScreen(viewModel: LookupViewModel = viewModel()) {
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
 
-            // Pestañas
+            // Pestañas de arriba de la pantalla
             TabRow(selectedTabIndex = pagerState.currentPage) {
                 tabTitles.forEachIndexed { index, title ->
                     Tab(
@@ -102,19 +102,21 @@ fun LookupScreen(viewModel: LookupViewModel = viewModel()) {
                     0 -> LookupHeadersContent(
                         headers = headers,
                         isLoading = isLoading,
-                        error = error
+                        error = error,
+                        viewModel = viewModel
                     )
                     1 -> LookupLinesContent(
                         lines = lines,
                         isLoading = isLoading,
-                        error = error
+                        error = error,
+                        viewModel = viewModel
                     )
                 }
             }
         }
     }
 
-    // Diálogos de creación
+    // Modal dialogos de creación
     if (showCreateHeaderDialog) {
         CreateHeaderDialog(
             onDismiss = { showCreateHeaderDialog = false },
@@ -127,6 +129,7 @@ fun LookupScreen(viewModel: LookupViewModel = viewModel()) {
 
     if (showCreateLineDialog) {
         CreateLineDialog(
+            headers = headers,
             onDismiss = { showCreateLineDialog = false },
             onCreate = { code, name, desc, headerId ->
                 viewModel.createLine(code, name, desc, headerId)
@@ -141,7 +144,8 @@ fun LookupScreen(viewModel: LookupViewModel = viewModel()) {
 private fun LookupHeadersContent(
     headers: List<LookupHeader>,
     isLoading: Boolean,
-    error: String?
+    error: String?,
+    viewModel: LookupViewModel
 ) {
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -152,7 +156,10 @@ private fun LookupHeadersContent(
     } else {
         LazyColumn(contentPadding = PaddingValues(8.dp)) {
             items(headers) { header ->
-                LookupHeaderCard(header = header)
+                LookupHeaderCard(
+                    header = header,
+                    onDelete = { viewModel.softDeleteHeader(header.idLookupHeader) }
+                )
             }
         }
     }
@@ -163,7 +170,8 @@ private fun LookupHeadersContent(
 private fun LookupLinesContent(
     lines: List<LookupLine>,
     isLoading: Boolean,
-    error: String?
+    error: String?,
+    viewModel: LookupViewModel
 ) {
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -174,7 +182,10 @@ private fun LookupLinesContent(
     } else {
         LazyColumn(contentPadding = PaddingValues(8.dp)) {
             items(lines) { line ->
-                LookupLineCard(line = line)
+                LookupLineCard(
+                    line = line,
+                    onDelete = { viewModel.softDeleteLine(line.idLookupLine) }
+                )
             }
         }
     }

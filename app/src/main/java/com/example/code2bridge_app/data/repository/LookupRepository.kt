@@ -26,6 +26,11 @@ class LookupRepository {
     }
 
     suspend fun createLine(dto: LookupLineCreateDto) = api.createLine(dto)
+
+    // Soft Delete
+    suspend fun softDeleteHeader(id: Int) = api.softDeleteHeader(id)
+
+    suspend fun softDeleteLine(id: Int) = api.softDeleteLine(id)
 }
 
 private fun LookupHeaderDto.toModel(): LookupHeader {

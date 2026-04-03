@@ -84,7 +84,7 @@ fun HomeScreen(mainNavController: NavController? = null) {
             composable("students") { StudentScreen(
                 mainNavController = mainNavController
             ) }
-            composable("courses") { CourseScreen() }
+            composable("courses") { CourseScreen(mainNavController = mainNavController) }
             composable("tuitions") { TuitionScreen() }
             composable("lookups") { LookupScreen() }
         }

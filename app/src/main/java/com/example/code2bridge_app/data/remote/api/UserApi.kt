@@ -21,8 +21,8 @@ interface UserApi {
     suspend fun createUser(@Body user: UserCreateDto): Response<UserDto>
 
     @PUT("users/{id}")
-    suspend fun updateUser(@Path("id") id: Long, @Body user: UserUpdateDto): UserDto
+    suspend fun updateUser(@Path("id") id: Int, @Body user: UserUpdateDto): UserDto
 
     @DELETE("users/{id}")
-    suspend fun softDeleteUser(@Path("id") id: Long): Response<Unit>
+    suspend fun softDeleteUser(@Path("id") id: Int): Response<Unit>
 }

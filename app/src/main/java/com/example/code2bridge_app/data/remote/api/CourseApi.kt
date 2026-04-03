@@ -20,9 +20,9 @@ interface CourseApi {
     suspend fun createCourse(@Body student: CourseCreateDto): Response<CourseDto>
 
     @PUT("courses/{id}")
-    suspend fun updateCourse(@Path("id") id: Long, @Body student: CourseUpdateDto): CourseDto
+    suspend fun updateCourse(@Path("id") id: Int, @Body student: CourseUpdateDto): CourseDto
 
-    @DELETE("courses/{id}")
-    suspend fun softDeleteCourse(@Path("id") id: Long): Response<Unit>
+    @PUT("courses/{id}/delete")
+    suspend fun softDeleteCourse(@Path("id") id: Int): Response<Unit>
 
 }

@@ -1,31 +1,26 @@
 package com.example.code2bridge_app.data.remote.dto
 
-import com.example.code2bridge_app.data.model.LookupLine
-
-data class CourseDto (
-    val idCourse: Long,
-    val staticTitle: String,
-    val lookupTitle: LookupLine,
+data class CourseDto(
+    val idCourse: Int,
+    val lookupTitle: LookupLineDto?,
     val description: String,
     val enableFlag: String,
     val startDate: String?,
     val endDate: String?
 )
 
-data class CourseCreateDto (
-    val staticTitle: String,
-    val lookupTitle: LookupLine,
+data class CourseCreateDto(
+    val lookupTitleId: Int,
     val description: String
 )
 
-data class CourseUpdateDto (
-    val staticTitle: String,
-    val lookupTitle: LookupLine,
+data class CourseUpdateDto(
+    val lookupTitleId: Int,
     val description: String
 )
 
-data class CourseResponseDto (
+data class CourseResponseDto(
     val success: Boolean,
     val message: String,
-    val idCourse: Int
+    val idCourse: Int?
 )

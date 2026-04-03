@@ -114,6 +114,39 @@ class LookupViewModel : ViewModel() {
         }
     }
 
+    // Soft Delete
+    fun softDeleteHeader(id: Int) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _error.value = null
+            try {
+                repository.softDeleteHeader(id)
+                _successMessage.value = "Cabecera eliminada correctamente"
+                loadHeaders()
+            } catch (e: Exception) {
+                _error.value = "Error al eliminar cabecera: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun softDeleteLine(id: Int) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _error.value = null
+            try {
+                repository.softDeleteLine(id)
+                _successMessage.value = "Línea eliminada correctamente"
+                loadLines()
+            } catch (e: Exception) {
+                _error.value = "Error al eliminar línea: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
     // Limpiar mensajes de éxito después de un tiempo
     fun clearSuccessMessage() {
         _successMessage.value = null

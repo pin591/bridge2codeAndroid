@@ -20,9 +20,9 @@ interface TuitionApi {
     suspend fun createTuition(@Body student: TuitionCreateDto): Response<TuitionDto>
 
     @PUT("tuitions/{id}")
-    suspend fun updateTuition(@Path("id") id: Long, @Body student: TuitionUpdateDto): TuitionDto
+    suspend fun updateTuition(@Path("id") id: Int, @Body student: TuitionUpdateDto): TuitionDto
 
-    @DELETE("tuitions/{id}")
-    suspend fun softDeleteTuition(@Path("id") id: Long): Response<Unit>
+    @PUT("tuitions/{id}/delete")
+    suspend fun softDeleteTuition(@Path("id") id: Int): Response<Unit>
 
 }
